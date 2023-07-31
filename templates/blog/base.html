@@ -1,5 +1,4 @@
 {% load static %}
-import MenuIcon from '@mui/icons-material/Menu';
 <!doctype html>
 <html lang="es">
 
@@ -112,14 +111,14 @@ import MenuIcon from '@mui/icons-material/Menu';
     <header class="d-flex flex-wrap justify-content-between py-3 mb-4 border-bottom">
       <a href="{% url 'inicio' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <img class="logo" src="{% static 'blog/img/logo-tecno.png' %}" alt="Blog Tecno">
-        <span class="title">Blog Tecno</span>
+        <span class="title">Blog Tecno:Robotica</span>
       </a>
 
       {% if request.user.is_authenticated %}
       <div class="user-menu dropdown">
         <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
           aria-expanded="false">
-          <span>Hola {{ request.user.username | title }}</span>
+          <span><i class="bi bi-list"style="font-size: 70px;"></i></span>
         </a>
         <ul class="dropdown-menu text-small shadow">
           {% if request.user.is_staff %}
@@ -133,7 +132,7 @@ import MenuIcon from '@mui/icons-material/Menu';
       <div class="user-menu dropdown">
         <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
           aria-expanded="false">
-          <span>MENU</span>
+          <span><i class="bi bi-list"style="font-size: 70px;"></i></span>
         </a>
         <ul class="dropdown-menu text-small shadow">
           <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
@@ -155,12 +154,12 @@ import MenuIcon from '@mui/icons-material/Menu';
         <aside class="col-md-3">
           <div class="position-sticky" style="top: 2rem;">
             <div class="p-4 mb-3 bg-light rounded">
-              <h4 class="fst-italic text-center">Acerca de</h4>
+              <h4 class="fst-italic text-center">Acerca de <i class="bi bi-file-person"></i></h4>
               <p class="mb-0 text-justify">{{ acerca }}</p>
             </div>
 
             <div class="p-4 text-center">
-              <h4 class="fst-italic">Categorías</h4>
+              <h4 class="fst-italic">Categorías<i class="bi bi-tags-fill"></i></h4>
               <ol class="list-unstyled mb-0">
                 {% for categoria in categorias %}
                 <li><a class="text-decoration-none" href="{% url 'categoria' categoria_slug=categoria.slug%}">{{ categoria }}</a></li>
@@ -169,7 +168,7 @@ import MenuIcon from '@mui/icons-material/Menu';
             </div>
 
             <div class="p-4 text-center">
-              <h4 class="fst-italic">Archivos</h4>
+              <h4 class="fst-italic">Archivos<i class="bi bi-archive-fill"></i></h4>
               <ol class="list-unstyled mb-0">
                 {% for archivo in archivos %}
                 <li><a class="text-decoration-none" href="{% url 'archivo' year=archivo.fecha.year month=archivo.fecha.month %}">{{ archivo.fecha|date:'F Y'|capfirst }}</a></li>
@@ -178,7 +177,7 @@ import MenuIcon from '@mui/icons-material/Menu';
             </div>
 
             <div class="p-4 text-center">
-              <h4 class="fst-italic">Nuestras redes</h4>
+              <h4 class="fst-italic">Nuestras redes<i class="bi bi-at"></i></h4>
               <ol class="list-unstyled">
                 {% for red in redes %}
                 {% if red.url %}

@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block contenido %}
+  <h2>Editar comentario</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form }}
+      <button class="btn btn-dark rounded-pill" type="submit">Guardar cambios</button>
+    </div>
+  </form>
+{% endblock contenido %}

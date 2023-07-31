@@ -36,7 +36,7 @@
   </section>
 
   <!-- Comentarios -->
-  <h2>Leave your comment!</h2>
+  <h2>Deja tu comentario</h2>
 <div id="comments_section">
 
   {% if user.is_authenticated %}
@@ -44,15 +44,15 @@
     {% csrf_token %}
     <div class="form-group">
       {{ comment_form }}
-      <button class="btn btn-info" type="submit">Add comment <i class="fas fa-comments"></i></button>
+      <button class="btn btn-dark rounded-pill" type="submit">Agregar comentario <i class="fas fa-comments"></i></button>
     </div>
   </form>
   {% else %}
-  <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Log in to add a comment!</a><br>
+  <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Ingresa para comentar</a><br>
   {% endif %}
 
   {% if comments %}
-  <strong class="text-secondary">{{ object.number_of_comments }} Comment{{ object.number_of_comments|pluralize }}</strong>
+  <strong class="text-secondary">{{ object.number_of_comments }} Comentarios{{ object.number_of_comments|pluralize }}</strong>
   <hr>
   <ul>
     {% for comment in comments %}
@@ -65,12 +65,16 @@
         <p>
           {{ comment.content|safe }}
         </p>
+        {% if request.user == comment.author or request.user.is_superuser %}
+            <a href="{% url 'editar_comentario' comment_id=comment.id %}">Editar</a> |
+            <a href="{% url 'eliminar_comentario' comment_id=comment.id %}">Eliminar</a>
+        {% endif %}
       </div>
     </li>
     {% endfor %}
   </ul>
   {% else %}
-    <strong class="text-secondary">No comments yet...</strong>
+    <strong class="text-secondary">Sin comentarios aun</strong>
   {% endif %}
 
 </div>

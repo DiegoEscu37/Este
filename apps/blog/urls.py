@@ -28,6 +28,11 @@ urlpatterns = [
     path('signup/', views.SignUpView.as_view(), name='signup'),
 
     path('confirmacion/<str:code>/<str:user>/',
-         views.ConfirmationView.as_view(), name='confirmacion')
+         views.ConfirmationView.as_view(), name='confirmacion'),
 
+    path('editar_comentario/<int:comment_id>/', 
+         views.editar_comentario, name='editar_comentario'),
+
+    path('eliminar_comentario/<int:comment_id>/', 
+         views.eliminar_comentario, name='eliminar_comentario'),          
 ]

@@ -167,7 +167,7 @@ class BlogComment(models.Model):
     blogpost_connected = models.ForeignKey(
         Articulo, related_name='comments', on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = TextField()
+    content = RichTextField()
     date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

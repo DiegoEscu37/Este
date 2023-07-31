@@ -7,7 +7,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
@@ -251,3 +251,25 @@ class ConfirmationView(View):
 
         # Redirigir a la página de inicio de sesión o donde desees
         return redirect('login')
+
+def editar_comentario(request, comment_id):
+    comment = get_object_or_404(models.BlogComment, id=comment_id)
+    
+    if request.method == 'POST':
+        form = forms.NewCommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('articulo', articulo_slug=comment.blogpost_connected.slug)
+    else:
+        form = forms.NewCommentForm(instance=comment)
+
+    return render(request, 'blog/forms/editar_comentario.html', {'form': form})
+
+def eliminar_comentario(request, comment_id):
+    comment = get_object_or_404(models.BlogComment, id=comment_id)
+    
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('articulo', articulo_slug=comment.blogpost_connected.slug)
+
+    return render(request, 'blog/forms/eliminar_comentario.html', {'comment': comment})
