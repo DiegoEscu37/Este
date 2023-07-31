@@ -1,0 +1,13 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Agregar un Comentario{% endblock %}
+
+{% block content %}
+    {% if comment %}
+        <h2>Tu Comentario ha sido agregado.</h2>
+        <p><a href="{{ articulo.get_canonical_url }}">Volver al articulo</a></p>
+    {% else %}
+        {% include "blog/forms/comment_form.html" %}
+    {% endif %}
+
+{% endblock %}

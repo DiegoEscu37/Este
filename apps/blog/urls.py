@@ -28,6 +28,10 @@ urlpatterns = [
     path('signup/', views.SignUpView.as_view(), name='signup'),
 
     path('confirmacion/<str:code>/<str:user>/',
-         views.ConfirmationView.as_view(), name='confirmacion')
+         views.ConfirmationView.as_view(), name='confirmacion'),
+
+    path('<slug:articulo_slug>/comment/', 
+         views.comment_for_article, name='comment_for_article'),    
+
 
 ]

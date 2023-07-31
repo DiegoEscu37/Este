@@ -36,7 +36,29 @@
   </section>
 
   <!-- Comentarios -->
-  <section>
+  {% for comment in comments %}
+    <div>
+        <p>
+            Comment {{ forloop.counter }} by {{ comment.name }} on {{ comment.created }}
+        </p>
+        {{ comment.body|linebreaks }}
+    </div>
+{% empty %}
+    <div>
+        <p>Todavia no hay Comentarios.</p>
+    </div>
+{% endfor %}
+{% if request.user.is_authenticated %}
+
+{% include "blog/forms/comment_form.html" %}
+
+{% else %}
+<p class="text-center">
+  Only registered users can post comments. Please,
+  <a href="{% url 'admin:login' %}?next={{ object.get_absolute_url }}">login</a>.
+</p>
+{% endif %}
+  {% comment %} <section>
     <div class="card">
       <div class="card-body">
         <div class="d-flex flex-start align-items-center">
@@ -74,7 +96,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> {% endcomment %}
 
 
 {% endblock contenido %}

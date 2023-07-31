@@ -13,6 +13,8 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.dates import YearArchiveView
+from django.views.decorators.http import require_POST
+from django.shortcuts import render
 from core import settings
 from . import models, forms
 
@@ -35,6 +37,7 @@ class ArticuloDetailView(DetailView):
     context_object_name = 'articulo'
     slug_field = 'slug'
     slug_url_kwarg = 'articulo_slug'
+   
 
 
 class ArticulosByCategoriaView(ListView):
@@ -233,3 +236,58 @@ class ConfirmationView(View):
 
         # Redirigir a la página de inicio de sesión o donde desees
         return redirect('login')
+    
+@require_POST
+def comment_for_article(request, articulo_id):
+
+    # get the article by article_id
+    articulo = get_object_or_404(models.Articulo, id = articulo_id, publicado=True)
+    comment = None
+    
+    # A comment form
+    if request.method == 'POST':
+        
+      form = forms.CommentForm(data=request.POST)
+
+      if form.is_valid():
+        # Create a Comment object before saving it to the database
+        comment = form.save(commit=False)
+
+        # Assign the article to the comment
+        comment.articulo = articulo
+        # Save the comment to the database
+        comment.save()
+
+        return redirect('articulo', kwargs={'articulo_slug': articulo.slug})
+    else:
+        user = request.user
+        form = forms.CommentForm(initial={"name": user.username, "email": user.email})
+        return render(request, 'blog/comment.html', {'articulo': articulo, 'form': form, 'comment': comment})  
+
+    pass
+
+def article_details(request, year, month, day, articulo):
+    try:
+        articulo = get_object_or_404(models.Articulo, publicado=True, 
+                    slug=articulo,
+                    publish__year=year,
+                    publish__month=month,
+                    publish__day=day
+                )
+
+        # List of active comments for this article
+        comments = articulo.comments.filter(active=True)
+        
+        # Form for users to write comment
+        form = forms.CommentForm()
+
+    except models.Articulo.DoesNotExist:
+        raise Http404("No article found.")
+    
+    return render(request, 'blog/articulo.html', {
+            'articulo': articulo,
+            'comments': comments,
+            'form': form,
+            }
+        )
+    pass

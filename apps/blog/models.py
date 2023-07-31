@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
-
 ################################
 ##### Modelo Perfil Usuario ####
 ################################
@@ -156,3 +155,27 @@ class Articulo(models.Model):
 
     def __str__(self):
         return self.titulo
+
+
+class Comment(models.Model):    
+    articulo = models.ForeignKey(Articulo,on_delete=models.CASCADE,related_name='comments')    
+    usuario = models.CharField(max_length=100)
+    # models.ForeignKey(User, on_delete=models.SET_NULL,
+    #                           null=True, blank=True, verbose_name='Usuario')  
+    email = models.EmailField()    
+    contenido = models.TextField()    
+    creacion = models.DateTimeField(auto_now_add=True) 
+    actualizacion = models.DateTimeField(auto_now=True)   
+    activo = models.BooleanField(default=False)   
+
+    class Meta:        
+        ordering = ['creacion']
+        # indexes = [
+        #     models.Index(fields=['created']),
+        # ]  
+
+    def __str__(self):
+        return f'Comment by {self.usuario} on {self.articulo}'
+        pass
+    
+    pass

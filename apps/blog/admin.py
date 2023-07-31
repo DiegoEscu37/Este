@@ -1,6 +1,8 @@
 from django.contrib import admin
 from . import models
 
+
+
 admin.site.site_header = 'Administración del Blog'
 admin.site.index_title = 'Panel de Control'
 admin.site.site_title = 'Blog'
@@ -95,3 +97,11 @@ class ArticuloAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.Articulo, ArticuloAdmin)
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['usuario', 'email', 'articulo', 'creacion', 'activo']
+    list_filter = ['activo', 'creacion', 'actualizacion']
+    search_fields = ['usuario', 'email', 'contenido']
+
+admin.site.register(models.Comment, CommentAdmin)
