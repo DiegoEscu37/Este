@@ -238,24 +238,26 @@ class ConfirmationView(View):
         return redirect('login')
     
 @require_POST
-def comment_for_article(request, articulo_id):
+def comment_for_article(request, articulo_slug):
 
     # get the article by article_id
-    articulo = get_object_or_404(models.Articulo, id = articulo_id, publicado=True)
+    articulo = get_object_or_404(models.Articulo, slug = articulo_slug, publicado=True)
     comment = None
     
     # A comment form
-    form = forms.CommentForm(data=request.POST)
+    if request.method == "POST":
+       form = forms.CommentForm(data=request.POST)
 
-    if form.is_valid():
+       if form.is_valid():
         # Create a Comment object before saving it to the database
-        comment = form.save(commit=False)
+          comment = form.save(commit=False)
 
         # Assign the article to the comment
-        comment.articulo = articulo
+          comment.articulo = articulo
         # Save the comment to the database
-        comment.save()
-        pass
+          comment.save()
+    else:
+        form = forms.CommentForm()
 
     return render(request, 'blog/comment.html', {'articulo': articulo, 'form': form, 'comment': comment})
 

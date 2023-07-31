@@ -1,5 +1,5 @@
 <h2>Add a new comment</h2>
-<form action="{% url "comment_for_article" articulo.id %}" method="post">
+<form action="{% url "comment_for_article" articulo_slug=articulo.slug %}" method="post">
     {{ form.as_p }}
     {% csrf_token %}
     <p><input type="submit" value="Add comment"></p>
