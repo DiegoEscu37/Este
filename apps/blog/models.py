@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
+from django.utils import timezone
 
 ################################
 ##### Modelo Perfil Usuario ####
@@ -156,3 +157,18 @@ class Articulo(models.Model):
 
     def __str__(self):
         return self.titulo
+
+    @property
+    def number_of_comments(self):
+        return BlogComment.objects.filter(blogpost_connected=self).count()    
+
+
+class BlogComment(models.Model):
+    blogpost_connected = models.ForeignKey(
+        Articulo, related_name='comments', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return str(self.author) + ', ' + self.blogpost_connected.title[:40]
