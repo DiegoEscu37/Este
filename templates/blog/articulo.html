@@ -36,6 +36,24 @@
   </section>
 
   <!-- Comentarios -->
+
+
+
+
+
+
+
+
+  {% with comments.count as total_comments %}
+    <h2>
+        {{ total_comments }} comment{{ total_comments|pluralize }}
+    </h2>
+{% endwith %}
+
+<a href = '/blog/'>
+    Go back to the Articles
+</a>
+
   {% for comment in comments %}
     <div>
         <p>
@@ -48,16 +66,19 @@
         <p>Todavia no hay Comentarios.</p>
     </div>
 {% endfor %}
-{% if request.user.is_authenticated %}
+{% comment %} {% if user.is_authenticated %} {% endcomment %}
 
 {% include "blog/forms/comment_form.html" %}
 
-{% else %}
+{% comment %} {% else %}
 <p class="text-center">
   Only registered users can post comments. Please,
   <a href="{% url 'admin:login' %}?next={{ object.get_absolute_url }}">login</a>.
 </p>
-{% endif %}
+{% endif %} 
+
+
+{% endcomment %}
   {% comment %} <section>
     <div class="card">
       <div class="card-body">

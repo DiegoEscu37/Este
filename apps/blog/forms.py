@@ -60,11 +60,10 @@ class RegisterUserForm(UserCreationForm):
         return email_recibido
     
 class CommentForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['name'].disabled = True
-        self.fields['email'].disabled = True 
     class Meta:
         model = Comment
         fields = ['usuario', 'email', 'contenido']
+        pass
+    
+    pass
  

@@ -30,7 +30,7 @@ urlpatterns = [
     path('confirmacion/<str:code>/<str:user>/',
          views.ConfirmationView.as_view(), name='confirmacion'),
 
-    path('<slug:articulo_slug>/comment/', 
+    path('<int:articulo_id>/comment/', 
          views.comment_for_article, name='comment_for_article'),    
 
 

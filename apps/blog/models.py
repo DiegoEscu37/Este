@@ -166,7 +166,7 @@ class Comment(models.Model):
     contenido = models.TextField()    
     creacion = models.DateTimeField(auto_now_add=True) 
     actualizacion = models.DateTimeField(auto_now=True)   
-    activo = models.BooleanField(default=False)   
+    activo = models.BooleanField(default=True)   
 
     class Meta:        
         ordering = ['creacion']

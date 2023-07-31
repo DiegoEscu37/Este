@@ -7,14 +7,14 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import user_passes_test
 from django.utils.decorators import method_decorator
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.dates import YearArchiveView
 from django.views.decorators.http import require_POST
-from django.shortcuts import render
+from django.http import Http404, HttpResponse
 from core import settings
 from . import models, forms
 
@@ -245,11 +245,9 @@ def comment_for_article(request, articulo_id):
     comment = None
     
     # A comment form
-    if request.method == 'POST':
-        
-      form = forms.CommentForm(data=request.POST)
+    form = forms.CommentForm(data=request.POST)
 
-      if form.is_valid():
+    if form.is_valid():
         # Create a Comment object before saving it to the database
         comment = form.save(commit=False)
 
@@ -257,14 +255,12 @@ def comment_for_article(request, articulo_id):
         comment.articulo = articulo
         # Save the comment to the database
         comment.save()
+        pass
 
-        return redirect('articulo', kwargs={'articulo_slug': articulo.slug})
-    else:
-        user = request.user
-        form = forms.CommentForm(initial={"name": user.username, "email": user.email})
-        return render(request, 'blog/comment.html', {'articulo': articulo, 'form': form, 'comment': comment})  
+    return render(request, 'blog/comment.html', {'articulo': articulo, 'form': form, 'comment': comment})
 
     pass
+
 
 def article_details(request, year, month, day, articulo):
     try:
