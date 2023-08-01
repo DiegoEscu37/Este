@@ -2,6 +2,20 @@
 {% load static %}
 
 {% block contenido %}
+<form method="GET">
+  <div class="mb-3">
+    <label for="order_by">Ordenar por:</label>
+    <select name="order_by" id="order_by" class="form-select">
+      <option value="">--Seleccionar--</option>
+      <option value="antiguedad_asc">Antigüedad (Ascendente)</option>
+      <option value="antiguedad_desc">Antigüedad (Descendente)</option>
+      <option value="titulo_asc">Título (Ascendente)</option>
+      <option value="titulo_desc">Título (Descendente)</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Aplicar</button>
+</form>
+
   {% for articulo in articulos %}
     {% if forloop.first and page_obj.number == 1 %}
           <!-- ULTIMO POST - ARRIBA DE TODO -->

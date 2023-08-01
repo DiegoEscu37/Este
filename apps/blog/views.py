@@ -273,3 +273,5 @@ def eliminar_comentario(request, comment_id):
         return redirect('articulo', articulo_slug=comment.blogpost_connected.slug)
 
     return render(request, 'blog/forms/eliminar_comentario.html', {'comment': comment})
+
+
