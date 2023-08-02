@@ -4,8 +4,8 @@
 {% block contenido %}
 
 <div class="text-center mb-3">
-  <a href="{% url 'inicio' %}?orden=-creacion"><button class="btn btn-dark rounded-pill-sm" type="submit">Más recientes <i class="bi bi-arrow-clockwise"></i></button></a> |
-  <a href="{% url 'inicio' %}?orden=creacion"><button class="btn btn-dark rounded-pill-sm" type="submit">Más antiguos <i class="bi bi-arrow-counterclockwise"></i></button></a> |
+  <a href="{% url 'inicio' %}?orden=-creacion"><button class="btn btn-dark rounded-pill-sm" type="submit">Recientes <i class="bi bi-arrow-clockwise"></i></button></a> |
+  <a href="{% url 'inicio' %}?orden=creacion"><button class="btn btn-dark rounded-pill-sm" type="submit">Antiguos <i class="bi bi-arrow-counterclockwise"></i></button></a> |
   <a href="{% url 'inicio' %}?orden=titulo"><button class="btn btn-dark rounded-pill-sm" type="submit"><i class="bi bi-sort-alpha-down"style="font-size: 20px;"></i></button></a> |
   <a href="{% url 'inicio' %}?orden=-titulo"><button class="btn btn-dark rounded-pill-sm" type="submit"><i class="bi bi-sort-alpha-down-alt" style="font-size: 20px;"></i></button></a>
 </div>
