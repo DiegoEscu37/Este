@@ -65,7 +65,7 @@
         <p>
           {{ comment.content|safe }}
         </p>
-        {% if request.user == comment.author or request.user.is_superuser %}
+        {% if request.user == comment.author or request.user.is_superuser or request.user.is_staff%}
             <a class="btn btn-dark rounded-pill" href="{% url 'editar_comentario' comment_id=comment.id %}">Editar</a> |
             <a class="btn btn-dark rounded-pill" href="{% url 'eliminar_comentario' comment_id=comment.id %}">Eliminar</a>
         {% endif %}
