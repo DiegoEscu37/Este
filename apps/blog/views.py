@@ -28,6 +28,29 @@ class InicioView(ListView):
     paginate_by = 3
     queryset = models.Articulo.objects.filter(publicado=True)
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        # Obtener el parámetro 'orden' de la URL (ascendente o descendente)
+        orden = self.request.GET.get('orden', None)
+
+        # Filtrar los artículos por antigüedad (fecha de creación)
+        if orden == 'creacion':
+            queryset = queryset.order_by('creacion')
+        elif orden == '-creacion':
+            queryset = queryset.order_by('-creacion')
+
+        # Filtrar los artículos por orden alfabético (título)
+        elif orden == 'titulo':
+            queryset = queryset.order_by('titulo')
+        elif orden == '-titulo':
+            queryset = queryset.order_by('-titulo')
+
+        return queryset
+    
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
 
 class ArticuloDetailView(DetailView):
     model = models.Articulo
