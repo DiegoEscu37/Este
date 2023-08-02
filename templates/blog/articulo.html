@@ -43,7 +43,10 @@
   <form method="POST">
     {% csrf_token %}
     <div class="form-group">
+      
       {{ comment_form }}
+    </div>
+    <div class="form-group">
       <button class="btn btn-dark rounded-pill" type="submit">Agregar comentario <i class="fas fa-comments"></i></button>
     </div>
   </form>

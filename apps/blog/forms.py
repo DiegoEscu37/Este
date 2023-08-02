@@ -5,6 +5,7 @@ from .models import Articulo
 from .models import BlogComment
 
 
+
 class ArticuloForm(forms.ModelForm):
 
     class Meta:
@@ -64,3 +65,7 @@ class NewCommentForm(forms.ModelForm):
     class Meta:
         model = BlogComment
         fields = ['content']
+
+        widgets = {
+            'content': forms.Textarea(attrs={'class': 'form-control'}),
+        }

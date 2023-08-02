@@ -131,7 +131,7 @@ class Articulo(models.Model):
     contenido = RichTextField(verbose_name='Contenido')
     imagen = models.ImageField(
         upload_to='blog/articulos/imagenes', null=True, blank=True, verbose_name='Imagen')
-    publicado = models.BooleanField(default=False, verbose_name='Publicado')
+    publicado = models.BooleanField(default=True, verbose_name='Publicado')
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL,
                                   related_name='get_articulos', null=True, blank=True, verbose_name='Categoría')
     autor = models.ForeignKey(User, on_delete=models.SET_NULL,
@@ -167,7 +167,7 @@ class BlogComment(models.Model):
     blogpost_connected = models.ForeignKey(
         Articulo, related_name='comments', on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = RichTextField()
+    content = models.TextField(verbose_name='contenido')
     date_posted = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
