@@ -174,7 +174,7 @@ class ArticuloUpdateView(UpdateView):
     slug_url_kwarg = 'articulo_slug'
 
     def form_valid(self, form):
-        if form.instance.autor == self.request.user or self.request.user.is_superuser:
+        if form.instance.autor == self.request.user or self.request.user.is_superuser or self.request.user.is_staff:
             return super().form_valid(form)
         else:
             return redirect('login')
@@ -199,7 +199,7 @@ class ArticuloDeleteView(DeleteView):
         self.object = self.get_object()
 
         # Verifica si el usuario actual es el autor del artículo
-        if self.object.autor == request.user or request.user.is_superuser:
+        if self.object.autor == request.user or request.user.is_superuser or request.user.is_staff:
             return super().dispatch(request, *args, **kwargs)
         else:
             # Si el usuario no es el autor, redirigir a la página de login
