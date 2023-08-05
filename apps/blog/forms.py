@@ -69,3 +69,8 @@ class NewCommentForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+class ArticuloCategoriaImagenForm(forms.ModelForm):
+    class Meta:
+        model = Articulo
+        fields = ['categoria', 'imagen']

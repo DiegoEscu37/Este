@@ -185,6 +185,20 @@ class ArticuloUpdateView(UpdateView):
         # Genera la URL para la vista 'articulo' usando el slug actualizado del artículo
         return reverse('articulo', kwargs={'articulo_slug': articulo.slug})
 
+@user_passes_test(lambda u: u.is_staff, login_url='login')
+def editar_categoria_imagen(request, articulo_slug):
+    articulo = get_object_or_404(models.Articulo, slug=articulo_slug)
+
+    if request.method == 'POST':
+        form = forms.ArticuloCategoriaImagenForm(request.POST, request.FILES, instance=articulo)
+        if form.is_valid():
+            form.save()
+            return redirect('articulo', articulo_slug=articulo.slug)
+    else:
+        form = forms.ArticuloCategoriaImagenForm(instance=articulo)
+
+    return render(request, 'blog/forms/editar_categoria_imagen.html', {'form': form})    
+
 
 @method_decorator(user_passes_test(usuario_es_colaborador, login_url='login'), name='dispatch')
 class ArticuloDeleteView(DeleteView):

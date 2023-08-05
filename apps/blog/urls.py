@@ -34,5 +34,8 @@ urlpatterns = [
          views.editar_comentario, name='editar_comentario'),
 
     path('eliminar_comentario/<int:comment_id>/', 
-         views.eliminar_comentario, name='eliminar_comentario'),          
+         views.eliminar_comentario, name='eliminar_comentario'),
+
+    path('editar_categoria_imagen/<slug:articulo_slug>/', 
+         views.editar_categoria_imagen, name='editar_categoria_imagen'),               
 ]
